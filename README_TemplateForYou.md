@@ -125,7 +125,7 @@ Algorithm Greedy_Coloring(Graph G)
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/your-repository.git
+   git clone (https://github.com/YagmurCelikkaya/algorithms-and-programming-ii-semester-capstone-project-YagmurCelikkaya.git)
    cd your-repository
    ```
 
@@ -206,7 +206,7 @@ python -m unittest test_algorithm.py
 
 ## Live Demo
 
-A live demo of this application is available at: [Insert Streamlit Cloud URL here]
+A live demo of this application is available at: [(https://algorithms-and-programming-ii-semester-capstone-project-yagmur.streamlit.app/)]
 
 ## Limitations and Future Improvements
 
