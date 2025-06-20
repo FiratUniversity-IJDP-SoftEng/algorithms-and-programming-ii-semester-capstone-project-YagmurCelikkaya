@@ -5,7 +5,7 @@
 ## Overview
 
 Welcome to the Algorithms and Programming II course project at Fırat University, Technology Faculty, Software Engineering Department. This project involves developing interactive web applications to implement, visualize, and analyze algorithms using Python and Streamlit.
-
+ 
 ## Learning Objectives
 
 This project is designed to help you:

@@ -1,60 +1,118 @@
-# [Your Algorithm Name] - Interactive Visualization
+# [Graph Coloring] - Interactive Visualization
 
 ## Project Overview
 
-This project is an interactive web application that implements and visualizes [Algorithm Name], developed as part of the Algorithms and Programming II course at Fırat University, Software Engineering Department.
+This project is an interactive web application developed with `Streamlit` , used `Greedy Algorithm` , to visualize `Graph Coloring` Algorithm , developed as part of the Algorithms and Programming II course at Fırat University, Software Engineering Department.
 
 ## Algorithm Description
 
-[Provide a comprehensive explanation of your algorithm here. Include the following elements:]
+The Greedy Coloring Algorithm colors the graph’s vertices one by one. At each step, it assigns the smallest available color that hasn’t been used by any of its neighbors.
+
+Key Concepts:
+- It uses a dictionary to store the color of each node.
+
+- For each node:
+
+   - It collects the colors of all neighboring nodes.
+
+   - It assigns the lowest color (starting from 0) not used by neighbors.
+
+- It continues until all nodes are colored.
+
+This approach doesn’t guarantee the optimal chromatic number but is efficient and often close to optimal for sparse graphs.
 
 ### Problem Definition
-
-[Clearly define the problem that the algorithm solves]
+---
+Color the vertices of a graph such that no two adjacent vertices have the same color, using the minimum number of colors.
 
 ### Mathematical Background
+---
+Graph coloring is a function defined on a graph G=(V,E), where:
+- V is the set of vertices (nodes),
+- 𝐸 is the set of edges (connections between nodes).
 
-[Explain any mathematical concepts, formulas, or notation relevant to understanding the algorithm]
+We define a coloring function: c: V → C
+Where:
+- C is a set of colors,
+- c(v) is the color assigned to vertex v.
+
+#### Valid Coloring Condition
+For the coloring to be valid: ∀(u,v) ∈ E , c(u) ≠ c(v)
+This means no two adjacent vertices (connected by an edge) should have the same color.
+
+#### Chromatic Number
+The chromatic number χ(G) of a graph G is the minimum number of colors needed to color the graph such that the condition above is satisfied:
+
+χ(G)=min{∣C∣ : c:V→C is a proper coloring}
 
 ### Algorithm Steps
+---
+1. Initialize an empty dictionary coloring.
+2. For each node in the graph:
 
-1. [Step 1 with explanation]
-2. [Step 2 with explanation]
-3. [Step 3 with explanation]
-...
+      - Get the colors of its neighbors (neighbor_colors).
+
+      - Start with color 0 and increase until a color not in neighbor_colors is found.
+
+      - Assign that color to the node.
+3. Return the coloring dictionary.
+
 
 ### Pseudocode
-
+---
 ```
-[Include pseudocode representation of your algorithm]
+Algorithm Greedy_Coloring(Graph G)
+    Input: A graph G = (V, E) with vertices V and edges E
+    Output: A dictionary Coloring that maps each vertex to a color
+
+    Initialize an empty dictionary Coloring
+
+    For each vertex u in V do
+        Initialize an empty set Neighbor_Colors
+
+        For each neighbor v of u do
+            If v is in Coloring then
+                Add Coloring[v] to Neighbor_Colors
+            End If
+        End For
+
+        color ← 0
+        While color is in Neighbor_Colors do
+            color ← color + 1
+        End While
+
+        Set Coloring[u] ← color
+    End For
+
+    Return Coloring
+
 ```
 
 ## Complexity Analysis
 
 ### Time Complexity
 
-- **Best Case:** O(...) - [Explanation]
-- **Average Case:** O(...) - [Explanation]
-- **Worst Case:** O(...) - [Explanation]
+- **Best Case:** O(V + E) - ` Each node and edge visited once.`
+- **Average Case , Worst Case:** O(V^2) - `In dense graphs with many neighbors per node.`
 
 ### Space Complexity
 
-- O(...) - [Explanation]
+- O(V) - `For storing color assignments in a dictionary.`
 
 ## Features
 
-- [Feature 1]
-- [Feature 2]
-- [Feature 3]
-...
+- Custom graph input through an interactive interface.
+- Visual step-by-step coloring using Matplotlib and NetworkX.
+- Clean and responsive layout using Streamlit.
 
 ## Screenshots
 
-![Main Interface](docs/screenshots/main_interface.png)
-*Caption describing the main interface*
+![Main Interface](docs/screenshots/Main_visualizer.png)
+*In the begining of the page there is the description of the algorithm and a slider to visualize 3 different types of graphics containing same number of nodes but different cromatic numbers and functionalities.*
 
-![Algorithm in Action](docs/screenshots/algorithm_demo.png)
-*Caption describing the algorithm in action*
+![Algorithm in Action](docs/screenshots/Custom_graph.png)
+
+*At the end of the main visualizer page , users can create their own graphics and an example input and output to help them.*
 
 ## Installation
 
@@ -94,37 +152,42 @@ This project is an interactive web application that implements and visualizes [A
 
 ## Usage Guide
 
-1. [Step 1 of using the application]
-2. [Step 2 of using the application]
-3. [Step 3 of using the application]
-...
+1. Run the app with streamlit run app.py
+2. Visualize the graph coloring examples
+3. Custom your own coloring graph
+4. Enter the edges of your graph (e.g., A-B, B-C, C-A)
+5. Click "ctrl + enter" to run your custom graph
+
+
 
 ### Example Inputs
 
-- [Example 1 with expected output]
-- [Example 2 with expected output]
-- [Example 3 with expected output]
+- [1-2, 2-3, 3-1, 3-4]
+- [A-B, B-C, C-D, D-E, E-A]
+- [0-1, 1-2, 2-0, 0-3, 3-4, 4-2]
 
 ## Implementation Details
 
 ### Key Components
 
-- `algorithm.py`: Contains the core algorithm implementation
-- `app.py`: Main Streamlit application
+- `algorithm.py`: Greedy coloring logic
+- `app.py`: Streamlit interface
 - `utils.py`: Helper functions for data processing
-- `visualizer.py`: Functions for visualization
+- `visualizer.py`: Graph drawing using NetworkX and Matplotlib
 
 ### Code Highlights
 
 ```python
-# Include a few key code snippets that demonstrate the most important parts of your implementation
-def key_function(parameter):
-    """
-    Docstring explaining what this function does
-    """
-    # Implementation with comments explaining the logic
-    result = process(parameter)
-    return result
+def greedy_coloring(graph):
+    coloring = {}
+    for node in graph.nodes():
+        neighbor_colors = {coloring[neighbor] for neighbor in graph.neighbors(node) if neighbor in coloring}
+        color = 0
+        while color in neighbor_colors:
+            color += 1
+        coloring[node] = color
+    return coloring
+
 ```
 
 ## Testing
@@ -137,9 +200,9 @@ python -m unittest test_algorithm.py
 
 ### Test Cases
 
-- [Test case 1 description]
-- [Test case 2 description]
-- [Test case 3 description]
+- Cycle graphs.
+- Disconnected components.
+- Complete graphs.
 
 ## Live Demo
 
@@ -149,35 +212,32 @@ A live demo of this application is available at: [Insert Streamlit Cloud URL her
 
 ### Current Limitations
 
-- [Limitation 1]
-- [Limitation 2]
-- [Limitation 3]
+- Greedy algorithm doesn't always give optimal results.
+- Only undirected graphs supported.
+- No drag-and-drop UI for graph editing.
 
 ### Planned Improvements
 
-- [Improvement 1]
-- [Improvement 2]
-- [Improvement 3]
+- Add animation of the coloring process.
+- Save/load graphs locally.
 
 ## References and Resources
 
 ### Academic References
 
-1. [Reference 1]
-2. [Reference 2]
-3. [Reference 3]
+1. Thomas H. Cormen , Introduction to Algorithms Chapter 16
 
 ### Online Resources
 
-- [Resource 1]
-- [Resource 2]
-- [Resource 3]
+- GeeksforGeeks - Graph Coloring
+- NetworkX Documentation
+- Brilliant - Graph Coloring and Chromatic Numbers
 
 ## Author
 
-- **Name:** [Your Name]
-- **Student ID:** [Your Student ID]
-- **GitHub:** [Your GitHub Username]
+- **Name:** R.Yağmur Çelikkaya
+- **Student ID:** 230543011
+- **GitHub:** YagmurCelikkaya
 
 ## Acknowledgements
 
